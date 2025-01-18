@@ -1,16 +1,24 @@
 <template>
   <div class="opcions-container">
     <ul>
-      <li>Opion 1</li>
-      <li>Opion 2</li>
-      <li>Opion 3</li>
-      <li>Opion 4</li>
+      <li @click="seleccionado" v-for="pokemon in pokemons" :key="pokemon.id">{{pokemon.nombre}}</li>
     </ul>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    pokemons: {
+      type: Array,
+      required: true,
+    },
+  },
+  methods:{
+    seleccionado(){
+      console.log('Hizo Click')
+    }
+  }
 
 }
 </script>
