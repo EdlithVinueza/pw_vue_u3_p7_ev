@@ -18,10 +18,20 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      propuedadPrueba:'Este texto es de prueba'
+    }
+  },
   computed: {
     imagenFuente() {
       return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${this.pokemonId}.svg`
        }
+  },
+  methods: {
+    metodoPrueba() {
+      console.log('Este es un metodo de prueba')
+    }
   }
 }
 </script>
