@@ -39,6 +39,7 @@ export default {
 <style>
 .pokemon-continer {
   height: 200px;
+  align-items: center;
 }
 
 .ocultar {
@@ -49,6 +50,6 @@ img {
   height: 200px;
   width: 200px;
   position: absolute;
-  right: 37%;
+  right: 42%;
 }
 </style>
