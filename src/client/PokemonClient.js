@@ -56,3 +56,4 @@ export function obtenerAleatorioFachada(min,max){
 
 //Esto se usa solo para cuando quiero expontar un a sola funcion
 //export default consultarPokemosFachada; //exportamos la funcion fachada
+

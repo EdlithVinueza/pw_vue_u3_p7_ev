@@ -11,34 +11,61 @@
       </div>
       <div class="form-group">
         <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-        <input type="date" id="fechaNacimiento" v-model="fechaNacimiento" required>
+        <input type="text" id="fechaNacimiento" v-model="fechaNacimiento" required>
       </div>
-      <button type="submit">Enviar</button>
+      <div class="form-group">
+        <label for="id">ID:</label>
+        <input type="number" id="id" v-model="id" >
+      </div>
+      <button type="submit" @click="buscar()">Consultar</button>
+  
+      <button type="submit" @click="guardar()">Guardar</button>
     </form>
   </div>
 </template>
 
 <script>
-import { obtenerPorIdFachada } from '../client/PersonaCliente';
+import { obtenerPorIdFachada,insertarFachada } from '../client/PersonaCliente';
 
 export default {
   data() {
     return {
       nombre: '',
       apellido: '',
-      fechaNacimiento: ''
+      fechaNacimiento: '',
+      id: ''
     };
   },
   methods: {
     submitForm() {
+      //Para ver los datos ingresados en el formulario
       console.log('Nombre:', this.nombre);
       console.log('Apellido:', this.apellido);
       console.log('Fecha de Nacimiento:', this.fechaNacimiento);
+      console.log('ID:', this.id);
+    },
+    async buscar(){
+      const data= await obtenerPorIdFachada(this.id); //aqui si debemos esperar a que la promesa se resuelva
+      this.nombre=data.nombre;
+      this.apellido=data.apellido;
+      this.fechaNacimiento=data.fechaNacimiento;
+    },
+    async guardar (){
+      const bodyPersona = {
+        nombre: this.nombre,
+        apellido: this.apellido,
+        fechaNacimiento: this.fechaNacimiento
+      };
+      await insertarFachada(bodyPersona);
     }
   },
   mounted() {
+    console.log('antes de llamar la API');
+    obtenerPorIdFachada(3); // aqui no ponemos await porque no necesitamos esperar a que la promesa se resuelva
     // Código para ejecutar cuando el componente se monta
+
   }
+
 };
 </script>
 
@@ -88,9 +115,11 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 button:hover {
   background-color: #004d40;
+
 }
 </style>
