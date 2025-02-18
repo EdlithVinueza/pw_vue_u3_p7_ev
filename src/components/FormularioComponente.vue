@@ -18,14 +18,16 @@
         <input type="number" id="id" v-model="id" >
       </div>
       <button type="submit" @click="buscar()">Consultar</button>
-  
       <button type="submit" @click="guardar()">Guardar</button>
+      <button type="submit" @click="actualizar()">Actualizar</button>
+      <button type="submit" @click="actualizarParcial()">Actualización Parcial</button>
+      <button type="submit" @click="eliminar()">Eliminar</button>
     </form>
   </div>
 </template>
 
 <script>
-import { obtenerPorIdFachada,insertarFachada } from '../client/PersonaCliente';
+import { obtenerPorIdFachada, insertarFachada, actualizarFachada, actualizarParcialFachada, eliminarFachada } from '../client/PersonaCliente';
 
 export default {
   data() {
@@ -64,9 +66,47 @@ export default {
       try {
         await insertarFachada(bodyPersona);
         alert('Datos guardados exitosamente.');
+      
       } catch (error) {
         console.error('Error al guardar:', error);
         alert('Error al guardar los datos. Por favor, intente nuevamente.');
+      }
+    },
+    async actualizar() {
+      const bodyPersona = {
+        nombre: this.nombre,
+        apellido: this.apellido,
+        fechaNacimiento: this.formatFechaNacimiento(this.fechaNacimiento)
+      };
+      try {
+        await actualizarFachada(this.id, bodyPersona);
+        alert('Datos actualizados exitosamente.');
+      } catch (error) {
+        console.error('Error al actualizar:', error);
+        alert('Error al actualizar los datos. Por favor, intente nuevamente.');
+      }
+    },
+    async actualizarParcial() {
+      const bodyPersona = {
+        nombre: this.nombre,
+        apellido: this.apellido,
+        fechaNacimiento: this.formatFechaNacimiento(this.fechaNacimiento)
+      };
+      try {
+        await actualizarParcialFachada(this.id, bodyPersona);
+        alert('Datos actualizados parcialmente exitosamente.');
+      } catch (error) {
+        console.error('Error al actualizar parcialmente:', error);
+        alert('Error al actualizar parcialmente los datos. Por favor, intente nuevamente.');
+      }
+    },
+    async eliminar() {
+      try {
+        await eliminarFachada(this.id);
+        alert('Datos eliminados exitosamente.');
+      } catch (error) {
+        console.error('Error al eliminar:', error);
+        alert('Error al eliminar los datos. Por favor, intente nuevamente.');
       }
     },
     formatFechaNacimiento(fecha) {
@@ -78,9 +118,7 @@ export default {
     console.log('antes de llamar la API');
     obtenerPorIdFachada(3); // aqui no ponemos await porque no necesitamos esperar a que la promesa se resuelva
     // Código para ejecutar cuando el componente se monta
-
   }
-
 };
 </script>
 
@@ -135,6 +173,5 @@ button {
 
 button:hover {
   background-color: #004d40;
-
 }
 </style>

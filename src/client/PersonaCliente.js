@@ -6,7 +6,7 @@ const obtenerPorId = async (id) => {
         console.log(response.data);
         return response.data;
     } catch (error) {
-        console.error('Error fetching persona by ID:', error);
+        console.error('Error obtener persona by ID:', error);
         throw error;
     }
 };
@@ -20,7 +20,7 @@ const insertar = async (body) => {
         const response = await axios.post('http://localhost:8081/matricula/v1.1/persona', body);
         return response.data;
     } catch (error) {
-        console.error('Error inserting persona:', error);
+        console.error('Error insertar persona:', error);
         throw error;
     }
 };
@@ -34,7 +34,7 @@ const actualizar = async (id, body) => {
         const response = await axios.put(`http://localhost:8081/matricula/v1.1/persona/${id}`, body);
         return response.data;
     } catch (error) {
-        console.error('Error updating persona:', error);
+        console.error('Error actualizar persona:', error);
         throw error;
     }
 };
@@ -48,7 +48,7 @@ const actualizarParcial = async (id, body) => {
         const response = await axios.patch(`http://localhost:8081/matricula/v1.1/persona/${id}`, body);
         return response.data;
     } catch (error) {
-        console.error('Error partially updating persona:', error);
+        console.error('Error actualizar parcialmente persona:', error);
         throw error;
     }
 };
@@ -62,7 +62,7 @@ const eliminar = async (id) => {
         const response = await axios.delete(`http://localhost:8081/matricula/v1.1/persona/${id}`);
         return response.data;
     } catch (error) {
-        console.error('Error deleting persona:', error);
+        console.error('Error eliminar persona:', error);
         throw error;
     }
 };
