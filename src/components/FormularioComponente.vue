@@ -11,7 +11,7 @@
       </div>
       <div class="form-group">
         <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-        <input type="text" id="fechaNacimiento" v-model="fechaNacimiento" required>
+        <input type="datetime-local" id="fechaNacimiento" v-model="fechaNacimiento" required>
       </div>
       <div class="form-group">
         <label for="id">ID:</label>
@@ -45,18 +45,33 @@ export default {
       console.log('ID:', this.id);
     },
     async buscar(){
-      const data= await obtenerPorIdFachada(this.id); //aqui si debemos esperar a que la promesa se resuelva
-      this.nombre=data.nombre;
-      this.apellido=data.apellido;
-      this.fechaNacimiento=data.fechaNacimiento;
+      try {
+        const data = await obtenerPorIdFachada(this.id); //aqui si debemos esperar a que la promesa se resuelva
+        this.nombre = data.nombre;
+        this.apellido = data.apellido;
+        this.fechaNacimiento = data.fechaNacimiento;
+      } catch (error) {
+        console.error('Error al buscar:', error);
+        alert('Error al buscar los datos. Por favor, intente nuevamente.');
+      }
     },
     async guardar (){
       const bodyPersona = {
         nombre: this.nombre,
         apellido: this.apellido,
-        fechaNacimiento: this.fechaNacimiento
+        fechaNacimiento: this.formatFechaNacimiento(this.fechaNacimiento)
       };
-      await insertarFachada(bodyPersona);
+      try {
+        await insertarFachada(bodyPersona);
+        alert('Datos guardados exitosamente.');
+      } catch (error) {
+        console.error('Error al guardar:', error);
+        alert('Error al guardar los datos. Por favor, intente nuevamente.');
+      }
+    },
+    formatFechaNacimiento(fecha) {
+      const date = new Date(fecha);
+      return date.toISOString().split('.')[0]; // Formatear la fecha sin milisegundos
     }
   },
   mounted() {

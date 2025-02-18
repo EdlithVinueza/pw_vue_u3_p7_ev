@@ -1,46 +1,73 @@
 import axios from 'axios';
 
-const obtenerPorId = async (id) =>{
-    const data = axios.get(`http://localhost:8081/matricula/v1.1/persona/${id}`).then(r => r.data) //data como atributo por que no es un jso
-    console.log(data)
-    return data;
-}
+const obtenerPorId = async (id) => {
+    try {
+        const response = await axios.get(`http://localhost:8081/matricula/v1.1/persona/${id}`);
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching persona by ID:', error);
+        throw error;
+    }
+};
 
-export const obtenerPorIdFachada = async (id) =>{
-    return await obtenerPorId(id); //aqui debemos poner el Await, por que solo ellaxios tiene implicicito el await
-}
+export const obtenerPorIdFachada = async (id) => {
+    return await obtenerPorId(id);
+};
 
+const insertar = async (body) => {
+    try {
+        const response = await axios.post('http://localhost:8081/matricula/v1.1/persona', body);
+        return response.data;
+    } catch (error) {
+        console.error('Error inserting persona:', error);
+        throw error;
+    }
+};
 
-const insertar = async (body) =>{
-    axios.post('http://localhost:8081/matricula/v1.1/persona',body).then(r => r.data)
-}
-
-export const insertarFachada = async (body) =>{
+export const insertarFachada = async (body) => {
     return await insertar(body);
-}
+};
 
-const actualizar = async (id, body) =>{
-    axios.put(`http://localhost:8081/matricula/v1.1/persona/${id}`,body).then(r => r.data)
-}
+const actualizar = async (id, body) => {
+    try {
+        const response = await axios.put(`http://localhost:8081/matricula/v1.1/persona/${id}`, body);
+        return response.data;
+    } catch (error) {
+        console.error('Error updating persona:', error);
+        throw error;
+    }
+};
 
-export const actualizarFachada = async (id, body) =>{
+export const actualizarFachada = async (id, body) => {
     return await actualizar(id, body);
-}
+};
 
+const actualizarParcial = async (id, body) => {
+    try {
+        const response = await axios.patch(`http://localhost:8081/matricula/v1.1/persona/${id}`, body);
+        return response.data;
+    } catch (error) {
+        console.error('Error partially updating persona:', error);
+        throw error;
+    }
+};
 
-const actualizarParcial = async (id, body) =>{
-    axios.patch(`http://localhost:8081/matricula/v1.1/persona/${id}`,body).then(r => r.data)
-}
-
-export const actualizarParcialFachada = async (id, body) =>{
+export const actualizarParcialFachada = async (id, body) => {
     return await actualizarParcial(id, body);
-}
+};
 
-const eliminar = async (id) =>{
-    axios.delete(`http://localhost:8081/matricula/v1.1/persona/${id}`).then(r => r.data)
-}
+const eliminar = async (id) => {
+    try {
+        const response = await axios.delete(`http://localhost:8081/matricula/v1.1/persona/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error deleting persona:', error);
+        throw error;
+    }
+};
 
-export const eliminarFachada = async (id) =>{
+export const eliminarFachada = async (id) => {
     return await eliminar(id);
-}   
+};
 
